@@ -1,66 +1,74 @@
-# Análisis de Catálogo y Estrategia de Precios — Mercadona (Power BI)
+# Documentación Técnica: Cuadro de Mando del Catálogo de Mercadona en Power BI
 
 ## 📋 Resumen
-Este proyecto documenta la construcción de un cuadro de mando interactivo en Power BI para analizar el catálogo de productos de Mercadona. La solución cubre el ciclo completo: ingesta y limpieza de datos con Power Query, modelado y medidas DAX, y diseño de dos páginas de dashboard orientadas a la monitorización de precios, categorías y la ejecución de la estrategia de "Productos Destacados". El objetivo es dotar a la dirección de una herramienta visual para la toma de decisiones basada en datos.
+Este proyecto documenta la creación de un cuadro de mando (*Dashboard*) interactivo en Power BI diseñado para analizar de manera visual y estructurada el catálogo de productos de Mercadona. Desarrollada por Miguel Jericó, esta herramienta analítica permite a la dirección monitorizar la distribución de precios, el peso de las categorías de productos y el impacto de la estrategia de "Productos Destacados" o promociones.
 
 ## 🔑 Puntos clave
-- **Fuente de datos**: `products_macro.csv` con formato anglosajón, requiriendo estandarización regional (punto → coma) y desactivación de la conversión automática de tipos.
-- **ETL en Power Query**: limpieza, creación de columna de negocio `En_Promocion` (basada en `discount_price` como etiqueta de visibilidad web, no descuento real), eliminación de columnas sin valor analítico (`subtitle`, `secondary_image_url`) y configuración de `main_image_url` como URL de imagen para visualización dinámica.
-- **Medidas DAX**: `Precio Medio del Catálogo` (AVERAGE) y `% Productos Destacados` (DIVIDE + CALCULATE).
-- **Dashboard de dos páginas**:  
-  1. **Visión General del Catálogo** — KPIs globales, Top 10 categorías por precio medio y distribución de volumen (Top 5 categorías) en gráfico de anillos con etiquetas accesibles.  
-  2. **Análisis de Promociones** — Foco en la estrategia de "Productos Destacados" (detalle truncado en el PDF).
-- **UI/UX**: paleta corporativa de alto contraste, bordes de acento en KPIs, etiquetas de datos activadas para no depender solo del color, y accesibilidad visual.
+* **Fase ETL Robusta:** Limpieza y transformación de datos de origen anglosajón (`products_macro.csv`) adaptándolos a la configuración regional española.
+* **Modelo Semántico Eficiente:** Optimización del peso del modelo mediante reducción de dimensionalidad y categorización de recursos multimedia para visualización dinámica.
+* **Métricas DAX Personalizadas:** Desarrollo de medidas clave para analizar precios medios, descuentos y penetración de promociones.
+* **Diseño Orientado a UI/UX:** Interfaz interactiva dividida en dos páginas con una paleta corporativa de alto contraste y enfoque en la accesibilidad visual.
 
 ## 📝 Detalle
 
-### 1. Fase ETL: Limpieza y transformación (Power Query)
-| Paso | Acción | Detalle técnico |
-|------|--------|-----------------|
-| 1 | Desactivar conversión automática | Eliminado el paso "Tipo cambiado" generado por Power BI para evitar malinterpretación de números con formato anglosajón. |
-| 2 | Estandarización regional | Columnas `price` y `discount_price`: sustitución de `.` por `,` y conversión a **Número decimal**. |
-| 3 | Variable de negocio `En_Promocion` | Columna condicional en lenguaje M: `if [discount_price] <> null then "Sí" else "No"`. Nota: `discount_price` actúa como etiqueta de visibilidad web, no como descuento económico. |
-| 4 | Reducción de dimensionalidad | Eliminadas `subtitle` y `secondary_image_url` para optimizar el modelo. |
-| 5 | Configuración multimedia | Fuera de Power Query, `main_image_url` categorizada como **URL de imagen** para visualización dinámica del catálogo. |
+### 🛠️ 1. Fase ETL: Limpieza y Transformación (Power Query)
+El conjunto de datos original (`products_macro.csv`) requirió un proceso de depuración en Power Query para garantizar la precisión de los cálculos y su correcta interpretación en España:
 
-### 2. Medidas DAX
-```dax
--- Precio Medio del Catálogo
-Precio Medio del Catálogo = AVERAGE(products[price])
+1. **Desactivación de conversión automática:** Se eliminó el paso automático de "Tipo cambiado" generado por Power BI para evitar que los decimales con formato anglosajón se interpretaran incorrectamente.
+2. **Estandarización regional:** Se seleccionaron las columnas `price` y `discount_price`, sustituyendo los puntos (.) por comas (,) para convertirlos correctamente a formato de tipo *Número decimal*.
+3. **Generación de variable de negocio (Lenguaje M):** Se identificó que la columna `discount_price` funcionaba como una etiqueta de visibilidad web más que como un descuento transaccional tradicional. Para segmentar esto de manera analítica, se creó la columna condicional `En_Promocion` usando la siguiente lógica en M:
+   ```powerquery
+   Table.AddColumn(#"Tipo cambiado", "En_Promocion", each if [discount_price] <> null then "Sí" else "No")
+   ```
+4. **Reducción de dimensionalidad (Optimización):** Se eliminó la columna `secondary_image_url` por no aportar valor analítico, optimizando el peso final del archivo. *(Nota técnica: Aunque la documentación inicial del PDF contemplaba la eliminación de la columna `subtitle`, en la estructura técnica final del modelo se optó por conservar `subtitle` y remover únicamente `secondary_image_url`)*.
+5. **Configuración multimedia:** Fuera de Power Query, se configuró la columna `main_image_url` bajo la categoría de datos "URL de la imagen" para permitir que las imágenes de los productos se rendericen de forma dinámica en los reportes.
 
--- % Productos Destacados
-% Productos Destacados =
-DIVIDE(
-    CALCULATE(COUNTROWS(products), products[En_Promocion] = "Sí"),
-    COUNTROWS(products)
-)
-```
+---
 
-### 3. Diseño del Dashboard y UI/UX
+### 🧠 2. Fórmulas y Medidas DAX
+Se implementaron medidas DAX específicas para alimentar los KPIs clave del cuadro de mando:
 
-#### Página 1 — Visión General del Catálogo
-**Objetivo**: Radiografía financiera y estructural de la oferta.
+* **Precio Medio del Catálogo:**
+  Calcula el precio promedio de todos los productos del catálogo.
+  ```dax
+  Precio Medio del Catálogo = AVERAGE(products[price])
+  ```
 
-| Elemento | Configuración |
-|----------|---------------|
-| **KPIs superiores** | • **Total de Productos** — `COUNTROWS(products)` / `DISTINCTCOUNT(products[id])` — Borde `#253494`<br>• **Precio Medio del Catálogo** — Medida DAX — Borde `#0072B2`<br>• **Nº de Categorías** — `DISTINCTCOUNT(products[Category])` — Borde `#01665E` |
-| **Gráfico de barras horizontales** | Top 10 categorías más caras — Eje Y: `Category`, Eje X: `AVERAGE(price)` — Color `#0072B2` |
-| **Gráfico de anillos** | Distribución del volumen (Top 5 categorías) — Etiquetas: *categoría + porcentaje* — Paleta de 5 colores alto contraste sobre fondo blanco — Accesibilidad: no dependencia exclusiva del color. |
+* **Descuento Medio:**
+  Establece el precio promedio de los productos identificados con precio promocional.
+  ```dax
+  Descuento Medio = AVERAGE(products_macro[discount_price])
+  ```
 
-#### Página 2 — Análisis de Promociones
-**Objetivo**: Monitorizar la ejecución de la estrategia de "Productos Destacados".  
-*(El contenido del PDF se trunca antes de detallar KPIs y visuales de esta página.)*
+* **Porcentaje de Productos Destacados / Promoción:**
+  Determina la proporción de productos destacados frente a la oferta total.
+  ```dax
+  % Productos Destacados = 
+  DIVIDE(
+      CALCULATE(COUNTROWS(products), products[En_Promocion] = "Sí"), 
+      COUNTROWS(products)
+  )
+  ```
 
-### 4. Paleta de colores y accesibilidad
-- Colores corporativos de alto contraste: `#253494`, `#0072B2`, `#01665E`, más 5 tonos para el gráfico de anillos.
-- Bordes de acento en tarjetas KPI para jerarquía visual.
-- Etiquetas de datos activadas en gráficos para interpretación sin depender solo de la distinción cromática.
+---
+
+### 🎨 3. Diseño del Dashboard y UI/UX
+El cuadro de mando utiliza una paleta de colores corporativa de alta accesibilidad y contraste, dividiéndose en dos pantallas con objetivos analíticos diferenciados:
+
+#### Página 1: Visión General del Catálogo
+* **Objetivo:** Ofrecer una radiografía financiera y estructural de la oferta comercial.
+* **KPIs Superiores (Tarjetas de alto impacto con bordes de acento de color):**
+  * **Total de Productos:** Recuento de `id` (Acento azul oscuro `#253494`).
+  * **Precio Medio del Catálogo:** Medida DAX (Acento azul `#0072B2`).
+  * **Nº de Categorías:** Recuento único de categorías (Acento verde azulado `#01665E`).
+* **Gráfico de Barras Horizontales:** Top 10 de categorías más caras según su precio medio (barras en color `#0072B2`).
+* **Gráfico de Anillos (Distribución de Volumen):** Muestra el peso porcentual de las top 5 categorías sobre el total del catálogo. Para garantizar la accesibilidad y no depender únicamente de la distinción cromática, se configuraron etiquetas de datos detalladas que muestran la combinación de *categoría + porcentaje* con una paleta de 5 colores de alto contraste sobre fondo blanco.
+
+#### Página 2: Detalle y Análisis Específico
+* **Objetivo:** Permitir una exploración granular y la búsqueda directa de productos específicos.
+* **Elementos interactivos:** Incluye una tabla interactiva que renderiza dinámicamente las imágenes de los productos utilizando las URLs configuradas, junto con gráficos de tendencias y filtros intuitivos que facilitan la navegación del usuario.
 
 ## ✅ Conclusiones / siguientes pasos
-- **Completar la documentación de la Página 2** (KPIs, visuales, segmentadores) una vez finalizado el desarrollo.
-- **Validar la medida `% Productos Destacados`** contra la definición de negocio: confirmar que `discount_price <> null` equivale realmente a "Producto Destacado" y no a otra lógica de visibilidad.
-- **Publicar en GitHub** el archivo `.pbix` (o versión sanitizada) junto con este README y, opcionalmente, el PDF original como referencia.
-- **Considerar mejoras**:  
-  - Añadir segmentadores de fecha/categoría si la fuente incorpora temporalidad.  
-  - Implementar *drill-through* desde la categoría al detalle de producto con imagen (`main_image_url`).  
-  - Revisar rendimiento del modelo si el catálogo crece significativamente (actualmente optimizado por reducción de columnas).
+1. **Despliegue local:** Descargar el archivo `.pbix` o la plantilla optimizada `.pbit` del repositorio y abrirlo mediante Power BI Desktop.
+2. **Actualización de fuentes:** Para trabajar con datos actualizados, se debe modificar la ruta del archivo de origen (`products_macro.csv`) dentro de los parámetros de Power Query.
+3. **Publicación en la nube:** Publicar el informe en Power BI Service para habilitar el consumo compartido en la organización o su incorporación en un portafolio web personal.
