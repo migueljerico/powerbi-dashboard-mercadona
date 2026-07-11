@@ -5,64 +5,55 @@
 *Análisis inteligente de datos comerciales y operativos enfocado en la cadena de suministros y ventas de Mercadona.*
 
 ## 🔗 Acceso / Demo
-Actualmente el proyecto se distribuye como archivo de reporte `.pbix`. Para visualizarlo, es necesario contar con Power BI Desktop instalado en el equipo.
+El proyecto se distribuye como archivo `.pbix`. Requiere Power BI Desktop para su visualización y análisis interactivo.
 
 ## 📋 Descripción
-Este proyecto consiste en el desarrollo de un tablero de control (dashboard) profesional utilizando **Microsoft Power BI**, diseñado para analizar el rendimiento comercial de Mercadona. El objetivo principal es transformar datos brutos en información accionable que permita optimizar la toma de decisiones estratégicas.
+Este proyecto consiste en el desarrollo de un tablero de control (dashboard) profesional utilizando Microsoft Power BI, diseñado para analizar el rendimiento comercial de Mercadona. El objetivo principal es transformar datos brutos en información accionable para optimizar la toma de decisiones estratégicas.
 
-El dashboard resuelve la necesidad de monitorizar KPIs críticos en tiempo real, permitiendo a los gestores identificar tendencias de ventas, analizar la rotación de productos y evaluar el desempeño por categorías o regiones geográficas, eliminando la dependencia de reportes estáticos en Excel.
+El dashboard resuelve la necesidad de monitorizar KPIs críticos, permitiendo identificar tendencias de ventas, analizar la rotación de productos y evaluar el desempeño por categorías, eliminando la dependencia de reportes estáticos y facilitando una visión dinámica del negocio.
 
 ## ✨ Funcionalidades
 
 | Funcionalidad | Descripción |
 | :--- | :--- |
-| **Análisis de Ventas** | Visualización de ingresos totales, margen de beneficio y volumen de ventas. |
-| **Segmentación de Productos** | Filtros dinámicos por categoría, marca y tipo de producto. |
-| **KPIs de Rendimiento** | Indicadores clave como el Ticket Promedio y Tasa de Crecimiento Mensual. |
-| **Análisis Temporal** | Comparativas interanuales y mensuales mediante slicers de fecha. |
-| **Mapas de Calor** | Distribución geográfica de ventas y densidad de clientes. |
+| **Análisis de Ventas** | Visualización de ingresos totales, margen y volumen. |
+| **Segmentación de Productos** | Filtros dinámicos por categoría y tipo de producto. |
+| **KPIs de Rendimiento** | Indicadores como Ticket Promedio y Crecimiento Mensual. |
+| **Análisis Temporal** | Comparativas mediante slicers de fecha. |
+| **Mapas de Calor** | Distribución geográfica de ventas y clientes. |
 
 ## ⚙️ Instalación
-
-1. **Requisitos Previos**:
-   - Instalar [Power BI Desktop](https://powerbi.microsoft.com/desktop/).
-
-2. **Clonado del Repositorio**:
+1. Instalar [Power BI Desktop](https://powerbi.microsoft.com/desktop/).
+2. Clonar el repositorio:
    ```bash
    git clone https://github.com/migueljerico/powerbi-dashboard-mercadona.git
-   cd powerbi-dashboard-mercadona
    ```
-
-3. **Ejecución**:
-   - Localiza el archivo `.pbix` en la raíz del proyecto.
-   - Haz doble clic sobre el archivo para abrirlo en Power BI Desktop.
-   - Si el origen de datos es externo, actualiza las credenciales en `Transformar datos` → `Configuración de origen de datos`.
+3. Abrir el archivo `Mercadona_Analysis.pbix` directamente en Power BI Desktop.
 
 ## 🚀 Uso
-
-Para interactuar con el dashboard, utiliza los siguientes elementos:
-- **Slicers (Filtros)**: Ubicados en el panel lateral para filtrar por año, trimestre o región.
-- **Cross-filtering**: Haz clic en cualquier segmento de un gráfico de tarta para filtrar automáticamente el resto de las visualizaciones del reporte.
-- **Tooltips**: Pasa el cursor sobre los puntos de datos para ver el desglose detallado de la cifra.
+- **Slicers:** Usa el panel lateral para filtrar por periodos o regiones.
+- **Cross-filtering:** Interactúa con gráficos para filtrar el resto de las visualizaciones.
+- **Tooltips:** Despliega información detallada al pasar el cursor sobre los datos.
 
 ## 📁 Estructura del proyecto
 ```text
 . 
-└── powerbi-dashboard-mercadona/
-    ├── README.md                  # Documentación del proyecto
-    └── Mercadona_Analysis.pbix    # Archivo maestro de Power BI
+├── docs/
+│   └── Analisis_Catalogo_Mercadona_PowerBI_Miguel_Jerico.md
+├── Mercadona_Analysis.pbix
+├── MANUAL_TECNICO.md
+└── README.md
 ```
 
 ## 🛠️ Tecnologías
-
-| Herramienta | Versión/Detalle | Uso en el proyecto |
+| Herramienta | Versión | Uso |
 | :--- | :--- | :--- |
-| **Power BI Desktop** | Latest | Diseño de visualizaciones y reportes |
-| **Power Query** | M Language | ETL (Extracción, Transformación y Carga) |
-| **DAX** | Advanced | Creación de medidas calculadas y columnas virtuales |
-| **Microsoft Excel** | .xlsx / .csv | Fuente de datos primaria |
+| Power BI Desktop | Latest | Visualización y Reporte |
+| Power Query | M Language | ETL de datos |
+| DAX | Advanced | Medidas calculadas |
+| Excel/CSV | .xlsx/.csv | Fuente de datos |
 
-## 📚 Contexto formativo o motivación
-Este proyecto ha sido desarrollado con el propósito de aplicar técnicas avanzadas de Business Intelligence (BI), enfocándose en la limpieza de datos complejos y la implementación de un modelo de datos en estrella (Star Schema) para optimizar la performance de las consultas DAX.
+## 📚 Contexto formativo
+Desarrollado para aplicar técnicas de Business Intelligence (BI) y modelos de datos en estrella (Star Schema) para optimizar consultas de alto rendimiento.
 
-<p align="center">Desarrollado por @migueljerico · 2026</p>
+<p align="center">Creado por @migueljerico y documentado por Google Gemini (gemini-3.1-flash-lite) · 2026</p>
