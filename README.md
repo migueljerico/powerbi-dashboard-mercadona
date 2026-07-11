@@ -45,10 +45,10 @@ El dashboard resuelve la necesidad de analizar KPIs críticos del catálogo (pre
 3. **Abrir el archivo principal**:
    ```bash
    # Opción A: Archivo completo con datos
-   start Mercadona_Analysis.pbix
+   start Ejercicio_3.8_Proyecto_Ciencia_Datos_Mercadona_Miguel_Jeric_.pbix
    
    # Opción B: Plantilla sin datos (requiere configurar ruta CSV)
-   start Mercadona_Analysis.pbit
+   start Ejercicio_3.8_Proyecto_Ciencia_Datos_Mercadona_Miguel_Jeric_.pbit
    ```
 
 4. **Si usa la plantilla (.pbit)**: Al abrir, Power BI solicitará la ruta del archivo `products_macro.csv`. Indique la ubicación local (ej. `C:\Datos\Mercadona\products_macro.csv`).
@@ -74,8 +74,9 @@ Slicer "En_Promocion" = "Sí" → Actualiza % Productos Destacados y Precio Medi
 ## 📁 Estructura del proyecto
 ```text
 .
-├── Mercadona_Analysis.pbix          # Reporte completo con datos embebidos
-├── Mercadona_Analysis.pbit          # Plantilla sin datos (para nuevas fuentes)
+├── Ejercicio_3.8_Proyecto_Ciencia_Datos_Mercadona_Miguel_Jeric_.pbix          # Reporte completo con datos embebidos
+├── Ejercicio_3.8_Proyecto_Ciencia_Datos_Mercadona_Miguel_Jeric_.pbit          # Plantilla sin datos (para nuevas fuentes)
+├── products_macro.csv                                                         # Dataset
 ├── docs/
 │   └── Analisis_Catalogo_Mercadona_PowerBI_Miguel_Jerico.md  # Documentación técnica extendida
 ├── MANUAL_TECNICO.md                # Manual técnico de arquitectura y despliegue
