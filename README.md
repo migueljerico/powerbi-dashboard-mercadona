@@ -36,7 +36,7 @@ El dashboard resuelve la necesidad de monitorizar KPIs críticos en tiempo real,
 3. **Ejecución**:
    - Localiza el archivo `.pbix` en la raíz del proyecto.
    - Haz doble clic sobre el archivo para abrirlo en Power BI Desktop.
-   - Si el origen de datos es externo, actualiza las credenciales en `Transformar datos` $\rightarrow$ `Configuración de origen de datos`.
+   - Si el origen de datos es externo, actualiza las credenciales en `Transformar datos` → `Configuración de origen de datos`.
 
 ## 🚀 Uso
 
