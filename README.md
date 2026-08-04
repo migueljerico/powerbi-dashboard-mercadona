@@ -6,8 +6,8 @@ Análisis interactivo y cuadro de mando sobre el catálogo de productos de Merca
 
 ## 📸 Vista Previa del Dashboard
 
-![Vista Previa 1 del Dashboard de Mercadona](Captura_Dashboard_Mercadona.png)
-![Vista Previa 2 del Dashboard de Mercadona](Captura_Dashboard_Mercadona_2.png)
+![Vista Previa 1 del Dashboard de Mercadona](.screenshots/Captura_Dashboard_Mercadona.png)
+![Vista Previa 2 del Dashboard de Mercadona](.screenshots/Captura_Dashboard_Mercadona_2.png)
 
 ---
 
