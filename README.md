@@ -18,8 +18,8 @@ powerbi-dashboard-mercadona/
 ├── README.md
 ├── MANUAL_TECNICO.md
 ├── LICENSE
-├── Ejercicio_3.8_Mercadona.pbix
-├── Ejercicio_3.8_Mercadona.pbit
+├── Ejercicio_3.8_Proyecto_Ciencia_Datos_Mercadona_Miguel_Jeric_.pbix
+├── Ejercicio_3.8_Proyecto_Ciencia_Datos_Mercadona_Miguel_Jeric_.pbit
 └── docs/
     └── Analisis_Catalogo_Mercadona_PowerBI_Miguel_Jerico.md
 ```
