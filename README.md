@@ -97,6 +97,7 @@ powerbi-dashboard-mercadona/
 ├── Analisis_Catalogo_Mercadona_PowerBI_Miguel_Jerico.pdf
 ├── Ejercicio_3.8_Proyecto_Ciencia_Datos_Mercadona_Miguel_Jeric_.pbix
 ├── Ejercicio_3.8_Proyecto_Ciencia_Datos_Mercadona_Miguel_Jeric_.pbit
+├── products_macro.csv
 └── docs/
     └── Analisis_Catalogo_Mercadona_PowerBI_Miguel_Jerico.md
 ```
