@@ -4,9 +4,9 @@ Este repositorio contiene el cuadro de mando e informe analitico sobre el catalo
 
 ## 📸 Capturas de Pantalla / Vista Previa
 
-- [Ver Captura del Dashboard](Captura%20Dashboard%20Mercadona.png)
+- [Ver Captura del Dashboard](./screenshoots/Captura%20Dashboard%20Mercadona.png)
 
-![Vista Previa del Dashboard de Mercadona](Captura%20Dashboard%20Mercadona.png)
+![Vista Previa del Dashboard de Mercadona](./screenshoots/Captura%20Dashboard%20Mercadona.png)
 
 ---
 
@@ -17,8 +17,8 @@ powerbi-dashboard-mercadona/
 ├── README.md
 ├── MANUAL_TECNICO.md
 ├── LICENSE
-├── Ejercicio_3.8_Mercadona.pbix
-├── Ejercicio_3.8_Mercadona.pbit
+├── Ejercicio_3.8_Proyecto_Ciencia_Datos_Mercadona_Miguel_Jeric.pbix
+├── Ejercicio_3.8_Proyecto_Ciencia_Datos_Mercadona_Miguel_Jeric.pbit
 └── docs/
     └── Analisis_Catalogo_Mercadona_PowerBI_Miguel_Jerico.md
 ```
