@@ -1,14 +1,13 @@
-# Power BI Dashboard - Catalogo Mercadona
+# Power BI Dashboard - Catálogo Mercadona
 
-Este repositorio contiene el cuadro de mando e informe analitico sobre el catalogo de productos de Mercadona desarrollado en Power BI.
+Análisis interactivo y cuadro de mando sobre el catálogo de productos de Mercadona desarrollado en Power BI Desktop.
 
-## 📸 Capturas de Pantalla / Vista Previa
+---
 
-- [Ver Captura 1 del Dashboard](./screenshots/Captura_Dashboard_Mercadona.png)
-- [Ver Captura 2 del Dashboard](./screenshots/Captura_Dashboard_Mercadona_2.png)
+## 📸 Vista Previa del Dashboard
 
-![Vista Previa 1 del Dashboard de Mercadona](./screenshots/Captura_Dashboard_Mercadona.png)
-![Vista Previa 2 del Dashboard de Mercadona](./screenshots/Captura_Dashboard_Mercadona_2.png)
+![Vista Previa del Dashboard de Mercadona](Captura%20Dashboard%20Mercadona.png)
+
 ---
 
 ## 📁 Estructura del Proyecto
@@ -18,14 +17,20 @@ powerbi-dashboard-mercadona/
 ├── README.md
 ├── MANUAL_TECNICO.md
 ├── LICENSE
-├── Ejercicio_3.8_Proyecto_Ciencia_Datos_Mercadona_Miguel_Jeric.pbix
-├── Ejercicio_3.8_Proyecto_Ciencia_Datos_Mercadona_Miguel_Jeric.pbit
+├── Ejercicio_3.8_Mercadona.pbix
+├── Ejercicio_3.8_Mercadona.pbit
 └── docs/
     └── Analisis_Catalogo_Mercadona_PowerBI_Miguel_Jerico.md
 ```
 
-## 🛠️ Requisitos e Instalacion
+---
+
+## 🛠️ Requisitos e Instalación
 
 1. Clonar este repositorio.
 2. Abrir los archivos `.pbix` o `.pbit` con **Power BI Desktop**.
-3. Asegurarse de tener acceso a las fuentes de datos especificadas en la documentacion tecnica dentro de `/docs`.
+3. Consultar el archivo `MANUAL_TECNICO.md` o la documentación en `/docs` para obtener detalles sobre las capas ETL y fórmulas DAX.
+
+---
+
+Desarrollado por @migueljerico y documentado por Gemini 3.6 Flash a través de la app Asistente de IA para Publicar Repositorios · 2026
