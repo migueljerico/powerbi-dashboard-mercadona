@@ -5,10 +5,10 @@ Este repositorio contiene el cuadro de mando e informe analitico sobre el catalo
 ## 📸 Capturas de Pantalla / Vista Previa
 
 - [Ver Captura 1 del Dashboard](./screenshots/Captura_Dashboard_Mercadona.png)
-- [Ver Captura 2 del Dashboard](./screenshots/Captura_Dashboard_Mercadona 2.png)
+- [Ver Captura 2 del Dashboard](./screenshots/Captura_Dashboard_Mercadona_2.png)
 
-![Vista Previa del Dashboard de Mercadona](./screenshots/Captura_Dashboard_Mercadona.png)
-![Vista Previa del Dashboard de Mercadona](./screenshots/Captura_Dashboard_Mercadona 2.png)
+![Vista Previa 1 del Dashboard de Mercadona](./screenshots/Captura_Dashboard_Mercadona.png)
+![Vista Previa 2 del Dashboard de Mercadona](./screenshots/Captura_Dashboard_Mercadona_2.png)
 ---
 
 ## 📁 Estructura del Proyecto
