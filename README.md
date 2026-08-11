@@ -4,7 +4,7 @@
 ![DAX](https://img.shields.io/badge/DAX-Medidas_Anal%C3%ADticas-0072B2?style=for-the-badge)
 ![Power Query](https://img.shields.io/badge/Power_Query-Lenguaje_M-253494?style=for-the-badge)
 ![Estado](https://img.shields.io/badge/Estado-Publicado-success?style=for-the-badge)
-![Licencia](https://img.shields.io/badge/Licencia-GPL_3.0-blue?style=for-the-badge)
+![Licencia](https://img.shields.io/badge/Licencia-MIT-blue?style=for-the-badge)
 
 *Cuadro de mando interactivo en Power BI para el análisis estratégico del catálogo de productos de Mercadona, con pipeline ETL regionalizado y métricas DAX de negocio.*
 
