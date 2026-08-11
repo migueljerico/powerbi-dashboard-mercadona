@@ -1,93 +1,133 @@
-# Power BI Dashboard - Catálogo Mercadona
+# 📊 Power BI Dashboard - Catálogo Mercadona
 
-Análisis interactivo y cuadro de mando sobre el catálogo de productos de Mercadona desarrollado en Power BI Desktop.
+![Power BI](https://img.shields.io/badge/Power_BI-Desktop-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
+![DAX](https://img.shields.io/badge/DAX-Medidas_Anal%C3%ADticas-0072B2?style=for-the-badge)
+![Power Query](https://img.shields.io/badge/Power_Query-Lenguaje_M-253494?style=for-the-badge)
+![Estado](https://img.shields.io/badge/Estado-Publicado-success?style=for-the-badge)
+![Licencia](https://img.shields.io/badge/Licencia-GPL_3.0-blue?style=for-the-badge)
+
+*Cuadro de mando interactivo en Power BI para el análisis estratégico del catálogo de productos de Mercadona, con pipeline ETL regionalizado y métricas DAX de negocio.*
 
 ---
 
-## 📸 Vista Previa del Dashboard
+## 🔗 Acceso / Demo
 
-![Vista Previa 1 del Dashboard de Mercadona](./screenshots/Captura_Dashboard_Mercadona.png)
-![Vista Previa 2 del Dashboard de Mercadona](./screenshots/Captura_Dashboard_Mercadona_2.png)
+Este proyecto está diseñado para ejecutarse localmente en **Power BI Desktop**. No existe un despliegue en la nube público, pero el informe puede publicarse en **Power BI Service** para consumo compartido en la organización.
+
+| Recurso | Descripción |
+|---|---|
+| Archivo `.pbix` | `Ejercicio_3.8_Proyecto_Ciencia_Datos_Mercadona_Miguel_Jeric_.pbix` — informe completo con datos cargados en memoria |
+| Plantilla `.pbit` | `Ejercicio_3.8_Proyecto_Ciencia_Datos_Mercadona_Miguel_Jeric_.pbit` — plantilla ligera sin datos embebidos |
+| Documentación técnica | `MANUAL_TECNICO.md` y `docs/Analisis_Catalogo_Mercadona_PowerBI_Miguel_Jerico.md` |
+| Análisis en PDF | `Analisis_Catalogo_Mercadona_PowerBI_Miguel_Jerico.pdf` — memoria del proyecto en formato imprimible |
 
 ---
-## 📋 Resumen
+
+## 📋 Descripción
+
 Este proyecto documenta la creación de un cuadro de mando (*Dashboard*) interactivo en Power BI para analizar de manera detallada el catálogo de productos de Mercadona. La solución procesa datos brutos mediante una sólida fase de ETL y modelado para ofrecer a la dirección una herramienta visual e interactiva que facilita la monitorización de la distribución de precios, el peso de las categorías y la efectividad de la estrategia de "Productos Destacados" o promociones.
 
-## 🔑 Puntos clave
-* **Proceso ETL regionalizado:** Limpieza y transformación de datos en Power Query para corregir formatos numéricos anglosajones y adaptarlos al estándar decimal de España.
-* **Enriquecimiento del modelo:** Creación de variables lógicas de negocio en lenguaje M para segmentar productos en promoción y configuración de URLs de imágenes dinámicas.
-* **Métricas DAX eficientes:** Implementación de medidas analíticas para calcular precios medios y la representatividad de productos destacados en el catálogo.
-* **Diseño UI/UX corporativo y accesible:** Visualización estructurada en dos lienzos con paletas de alto contraste y etiquetas de lectura accesible para asegurar la facilidad de uso.
+El conjunto de datos original (`products_macro.csv`) requería una depuración profunda antes de realizar los cálculos del modelo. Se aplicaron transformaciones en Power Query para corregir formatos numéricos anglosajones (punto como separador decimal) y adaptarlos al estándar decimal de España (coma), enriquecer el modelo con variables lógicas de negocio en lenguaje M y optimizar la compresión del motor columnar VertiPaq mediante la eliminación de columnas sin valor analítico. Sobre este modelo limpio, se implementaron medidas DAX específicas para alimentar los KPIs clave del informe.
 
-## 📝 Detalle
-
-### 🛠️ 1. Fase ETL y Transformación de Datos (Power Query)
-El conjunto de datos original (`products_macro.csv`) requería una depuración profunda antes de realizar los cálculos del modelo. Se aplicaron las siguientes transformaciones utilizando Power Query:
-
-1. **Desactivación de conversión automática:** Se eliminó el paso automático de "Tipo cambiado" generado por Power BI para evitar que los decimales con formato de punto anglosajón se interpretaran de forma incorrecta.
-2. **Estandarización regional:** En las columnas `price` y `discount_price` se reemplazaron los puntos (.) por comas (,) para garantizar que el sistema los reconociera como tipo *Número decimal* bajo la configuración regional de España.
-3. **Generación de variable de negocio (Lenguaje M):** Se identificó que la columna `discount_price` operaba como etiqueta de visibilidad web. Para segmentarla analíticamente, se añadió la columna condicional `En_Promocion` mediante la siguiente fórmula:
-   ```powerquery
-   Table.AddColumn(#"Tipo cambiado", "En_Promocion", each if [discount_price] <> null then "Sí" else "No")
-   ```
-4. **Optimización del modelo (Reducción de dimensionalidad):** Se eliminó la columna `secondary_image_url` por carecer de valor analítico, optimizando así el tamaño del archivo y el rendimiento de las consultas (manteniendo la columna `subtitle` dentro del modelo).
-5. **Configuración multimedia:** La columna `main_image_url` se categorizó específicamente como **URL de la imagen** para permitir que las imágenes de los productos se rendericen de forma dinámica en los reportes interactivos.
+La interfaz del reporte se divide en dos pantallas estratégicamente diseñadas para diferentes perfiles de toma de decisiones: una página de **Visión General del Catálogo** con KPIs financieros y estructurales, y una página de **Detalle y Análisis Específico** orientada a la exploración granular con imágenes dinámicas de productos. Todo el diseño emplea una paleta corporativa de alto contraste y etiquetas de lectura accesible para garantizar la facilidad de uso.
 
 ---
 
-### 🧠 2. Fórmulas y Medidas DAX
-A partir de la tabla limpia (`products_macro` o `products`), se desarrollaron medidas DAX específicas para alimentar los indicadores clave de rendimiento (KPIs):
+## ✨ Funcionalidades
 
-* **Precio Medio del Catálogo:**
-  Calcula el precio promedio general del catálogo completo de productos.
-  ```dax
-  Precio Medio del Catálogo = AVERAGE(products[price])
-  ```
-
-* **Descuento Medio:**
-  Establece el precio promedio de los artículos con una etiqueta promocional activa.
-  ```dax
-  Descuento Medio = AVERAGE(products_macro[discount_price])
-  ```
-
-* **Porcentaje de Productos Destacados (% en Promoción):**
-  Determina el peso porcentual de la estrategia de promociones sobre el total de la oferta comercial.
-  ```dax
-  % Productos Destacados = 
-  DIVIDE(
-      CALCULATE(COUNTROWS(products), products[En_Promocion] = "Sí"),
-      COUNTROWS(products)
-  )
-  ```
+| Funcionalidad | Descripción |
+|---|---|
+| **ETL regionalizado** | Reemplazo de separadores decimales anglosajones (`.` → `,`) en `price` y `discount_price` para adaptación al estándar español |
+| **Columna condicional `En_Promocion`** | Generada en lenguaje M para segmentar productos con etiqueta promocional activa (`Sí` / `No`) |
+| **Optimización VertiPaq** | Eliminación de `secondary_image_url` por carecer de valor analítico, reduciendo dimensionalidad y peso del modelo |
+| **URLs de imagen dinámicas** | Categorización de `main_image_url` como *URL de la imagen* para renderizado visual en tablas interactivas |
+| **Medida: Precio Medio del Catálogo** | `AVERAGE(products[price])` — promedio general del catálogo completo |
+| **Medida: Descuento Medio** | `AVERAGE(products_macro[discount_price])` — promedio de artículos con promoción activa |
+| **Medida: % Productos Destacados** | `DIVIDE(CALCULATE(...), COUNTROWS(...))` — peso porcentual de promociones sobre la oferta total |
+| **Página 1: Visión General** | KPIs en tarjetas con bordes de acento (`#253494`, `#0072B2`, `#01665E`), Top 10 categorías más caras y gráfico de anillos con etiquetas accesibles |
+| **Página 2: Detalle y Análisis** | Tabla dinámica con imágenes reales, gráficos de tendencia y segmentadores por categoría / estado de promoción |
+| **Parámetro configurable** | `Ruta_Origen_CSV` permite actualizar la fuente de datos sin modificar la lógica del modelo |
 
 ---
 
-### 🎨 3. Diseño del Dashboard y UI/UX
-La interfaz del reporte se divide en dos pantallas estratégicamente diseñadas para diferentes perfiles de toma de decisiones, usando una paleta corporativa de alto contraste que facilita la accesibilidad.
+## ⚙️ Instalación
 
-#### Página 1: Visión General del Catálogo
-Orientada a proporcionar una radiografía financiera y estructural de toda la oferta.
-* **KPIs Superiores (Tarjetas con bordes de acento de alto contraste):**
-  * **Total de Productos:** Recuento de `id` (Acento: `#253494`).
-  * **Precio Medio del Catálogo:** Medida DAX (Acento: `#0072B2`).
-  * **Nº de Categorías:** Recuento único de categorías (Acento: `#01665E`).
-* **Gráfico de barras horizontales (Top 10 categorías más caras):** Representa el promedio de la columna `price` en el eje X frente a `Category` en el eje Y, con barras de color azul corporativo (`#0072B2`).
-* **Gráfico de anillos (Distribución de volumen del Top 5 de categorías):** Permite ver el porcentaje de productos de cada categoría sobre el total. Cuenta con etiquetas de datos visibles (*Categoría + Porcentaje*) para no depender exclusivamente de la distinción cromática y mejorar la accesibilidad visual.
+1. **Clonar el repositorio:**
+```bash
+git clone https://github.com/migueljerico/powerbi-dashboard-mercadona.git
+cd powerbi-dashboard-mercadona
+```
 
-#### Página 2: Detalle y Análisis Específico
-Pensada para que los equipos analicen a nivel de artículo y efectúen búsquedas directas.
-* **Interactividad y navegación:** Dispone de una tabla dinámica con visualización de imágenes reales de los productos mediante URLs dinámicas.
-* **Exploración ágil:** Incorpora gráficos de tendencia y segmentadores de datos por categorías o estado de promoción para agilizar la toma de decisiones operativas.
+2. **Verificar requisitos previos:**
+   - Instalar **Power BI Desktop** (versión gratuita disponible en Microsoft Store o en [powerbi.microsoft.com](https://powerbi.microsoft.com)).
+   - Comprobar que el archivo `products_macro.csv` se encuentra en la raíz del repositorio.
+
+3. **Abrir el informe:**
+   - Doble clic sobre `Ejercicio_3.8_Proyecto_Ciencia_Datos_Mercadona_Miguel_Jeric_.pbix` para abrir el informe completo con datos cargados.
+   - Alternativamente, abrir la plantilla `.pbit` para un inicio ligero; Power BI solicitará la ruta del CSV en el primer arranque.
+
+4. **Configurar la ruta de origen (si es necesario):**
+   - En Power BI Desktop → pestaña **Inicio** → **Transformar datos** → **Administrar parámetros** → modificar `Ruta_Origen_CSV` con la ruta local del archivo `products_macro.csv`.
+
+5. **Consultar la documentación técnica:**
+   - Revisar `MANUAL_TECNICO.md` para detalles sobre arquitectura de capas, componentes y configuración del motor VertiPaq.
+   - Revisar `docs/Analisis_Catalogo_Mercadona_PowerBI_Miguel_Jerico.md` para el análisis funcional completo.
 
 ---
 
-## ✅ Conclusiones / siguientes pasos
-* **Consumo del cuadro de mando:** Se recomienda descargar el archivo `.pbix` (o la plantilla ligera `.pbit` para optimizar el peso de descarga) para explorar las interacciones completas desde Power BI Desktop.
-* **Actualización de datos:** Para adaptar el informe a nuevos conjuntos de datos o actualizaciones de inventario de Mercadona, solo se debe cambiar la ruta de origen de la variable o del archivo `products_macro.csv` dentro de la configuración de parámetros en Power Query.
+## 🚀 Uso
+
+### Apertura y navegación del dashboard
+
+Abre el archivo `.pbix` en Power BI Desktop. El informe contiene dos páginas accesibles desde las pestañas inferiores:
+
+- **Página 1 — Visión General del Catálogo:** Radiografía financiera con KPIs superiores (Total de Productos, Precio Medio, Nº de Categorías), gráfico de barras horizontales (Top 10 categorías más caras) y gráfico de anillos (distribución de volumen del Top 5 de categorías).
+- **Página 2 — Detalle y Análisis Específico:** Tabla interactiva con imágenes dinámicas de productos, gráficos de tendencia y segmentadores por categoría o estado de promoción.
+
+### Actualización de datos
+
+Para adaptar el informe a un nuevo conjunto de datos o actualizaciones de inventario, modifica el parámetro de origen en Power Query:
+
+```text
+Power BI Desktop → Transformar datos → Administrar parámetros → Ruta_Origen_CSV
+```
+
+### Transformaciones ETL aplicadas (Power Query / Lenguaje M)
+
+```powerquery
+// Reemplazo de separadores decimales anglosajones por estándar español
+Table.ReplaceValue(#"Tipo cambiado", ".", ",", Replacer.ReplaceText, {"price", "discount_price"})
+
+// Generación de columna condicional de negocio
+Table.AddColumn(#"Tipo cambiado", "En_Promocion", each if [discount_price] <> null then "Sí" else "No")
+```
+
+### Medidas DAX implementadas
+
+```dax
+// Precio promedio general del catálogo
+Precio Medio del Catálogo = AVERAGE(products[price])
+
+// Precio promedio de artículos con promoción activa
+Descuento Medio = AVERAGE(products_macro[discount_price])
+
+// Peso porcentual de productos destacados sobre el total
+% Productos Destacados = 
+DIVIDE(
+    CALCULATE(COUNTROWS(products), products[En_Promocion] = "Sí"),
+    COUNTROWS(products)
+)
+```
+
+### Publicación en Power BI Service
+
+```text
+Power BI Desktop → Pestaña "Inicio" → "Publicar" → Seleccionar área de trabajo
+```
 
 ---
 
-## 📁 Estructura del Proyecto
+## 📁 Estructura del proyecto
 
 ```text
 powerbi-dashboard-mercadona/
@@ -104,12 +144,16 @@ powerbi-dashboard-mercadona/
 
 ---
 
-## 🛠️ Requisitos e Instalación
+## 🛠️ Tecnologías
 
-1. Clonar este repositorio.
-2. Abrir los archivos `.pbix` o `.pbit` con **Power BI Desktop**.
-3. Consultar el archivo `MANUAL_TECNICO.md` o la documentación en `/docs` para obtener detalles sobre las capas ETL y fórmulas DAX.
+| Herramienta | Versión / Detalle | Uso en el proyecto |
+|---|---|---|
+| **Power BI Desktop** | Aplicación de escritorio (Microsoft) | Motor de visualización, modelado semántico y renderizado del dashboard interactivo |
+| **Power Query (Lenguaje M)** | Editor integrado de Power BI | Pipeline ETL: limpieza, transformación regional, enriquecimiento condicional y reducción de dimensionalidad |
+| **DAX (Data Analysis Expressions)** | Medidas calculadas | Lógica analítica: `Precio Medio del Catálogo`, `Descuento Medio`, `% Productos Destacados` |
+| **Motor VertiPaq** | In-Memory columnar (xVelocity) | Compresión y almacenamiento en memoria del modelo semántico optimizado |
+| **CSV (UTF-8)** | `products_macro.csv` — delimitador coma | Fuente de datos plana con catálogo de productos de Mercadona (8 campos: `id`, `title`, `subtitle`, `category`, `price`, `discount_price`, `main_image_url`, `secondary_image_url`) |
+| **Power BI Service** | Nube Microsoft (opcional) | Publicación y consumo compartido del informe en la organización |
+| **Git
 
----
-
-Desarrollado por @migueljerico y documentado por Gemini 3.6 Flash a través de la app Asistente de IA para Publicar Repositorios · 2026
+<p align="center">Creado por <a href="https://github.com/migueljerico">@migueljerico</a> y documentado por QwenCloud (glm-5.2) desde la App Asistente de IA · 2026</p>
