@@ -8,6 +8,8 @@
 
 *Cuadro de mando interactivo en Power BI para el análisis estratégico del catálogo de productos de Mercadona, con pipeline ETL regionalizado y métricas DAX de negocio.*
 
+---
+
 ## 📸 Vista Previa del Dashboard
 
 ![Dashboard de Mercadona](./screenshots/Captura_Dashboard_Mercadona.png)
